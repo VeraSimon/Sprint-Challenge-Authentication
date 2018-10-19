@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import Styled from 'styled-components';
 
 import Joke from './joke';
+
+const JokesContainer = Styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+`;
 
 class JokesList extends Component {
 	state = {
@@ -36,7 +43,7 @@ class JokesList extends Component {
 
 	render() {
 		return (
-			<div>
+			<JokesContainer>
 				{this.state.error && this.state.error.status ? (
 					<p>{`HTTP ${this.state.error.status}: ${
 						this.state.error.statusText
@@ -46,7 +53,7 @@ class JokesList extends Component {
 						<Joke joke={joke} key={joke.id * Math.random()} />
 					))
 				)}
-			</div>
+			</JokesContainer>
 		);
 	}
 }
