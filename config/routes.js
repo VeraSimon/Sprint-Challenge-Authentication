@@ -24,14 +24,15 @@ function register(req, res) {
 		usersTable
 			.addNewUser(newUser)
 			.then((id) => {
-				// res.status(201).json({ newUserId: id[0] });
 				usersTable
-					.findUser(newUser.username)
+					.authUser(newUser.username)
 					.then((user) => {
 						const token = generateToken(user.id);
 						// I'd normally do a status(200) here, but ya can't send more than one response, and we need to affirm the user was created successfully
 						res.status(201).json({
-							message: 'success!',
+							message: `Affirmative, ${
+								user.username
+							}. I read you.`,
 							token
 						});
 					})
@@ -49,6 +50,30 @@ function register(req, res) {
 
 function login(req, res) {
 	// implement user login
+	const credentials = {
+		username: req.body.username,
+		password: req.body.password
+	};
+
+	usersTable
+		.authUser(credentials.username)
+		.then((user) => {
+			if (
+				user &&
+				bcrypt.compareSync(credentials.password, user.password)
+			) {
+				const token = generateToken(user.id);
+				res.status(200).json({
+					message: `Affirmative, ${user.username}. I read you.`,
+					token
+				});
+			} else {
+				res.status(401).json({ error: 'You shall not pass!' });
+			}
+		})
+		.catch((err) => {
+			res.status(500).json({ error: err });
+		});
 }
 
 function getJokes(req, res) {

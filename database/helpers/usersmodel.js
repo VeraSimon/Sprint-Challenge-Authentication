@@ -8,13 +8,13 @@ const addNewUser = (userObj) => {
 };
 
 // findUser(username) -> {id: int, username: 'string', password: 'hashed string'}
-const findUser = (userObj) => {
+const authUser = (username) => {
 	return db('users')
-		.where({ username: userObj })
+		.where({ username })
 		.first();
 };
 
 module.exports = {
 	addNewUser,
-	findUser
+	authUser
 };
