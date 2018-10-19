@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Joke = (props) => {
 	return (
 		<div>
-			<h5>{props.joke.type}</h5>
+			<h4>{props.joke.type}</h4>
 			<p>{props.joke.setup}</p>
 			<p>{props.joke.punchline}</p>
 		</div>
