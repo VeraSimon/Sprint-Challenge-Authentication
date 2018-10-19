@@ -1,6 +1,8 @@
 const axios = require('axios');
+const bcrypt = require('bcryptjs');
 
 const { authenticate } = require('./middlewares');
+const { generateToken } = require('../database/helpers/token');
 const usersTable = require('../database/helpers/usersmodel');
 
 module.exports = (server) => {
@@ -26,7 +28,7 @@ function register(req, res) {
 				usersTable
 					.findUser(newUser.username)
 					.then((user) => {
-						const token = tokenHelper.generateToken(user.id);
+						const token = generateToken(user.id);
 						// I'd normally do a status(200) here, but ya can't send more than one response, and we need to affirm the user was created successfully
 						res.status(201).json({
 							message: 'success!',
