@@ -7,7 +7,7 @@ const addNewUser = (userObj) => {
 		.into('users');
 };
 
-// findUser(username) -> {id: int, username: 'string', password: 'hashed string'}
+// authUser(username) -> {id: int, username: 'string', password: 'hashed string'}
 const authUser = (username) => {
 	return db('users')
 		.where({ username })

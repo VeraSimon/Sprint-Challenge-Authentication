@@ -30,9 +30,7 @@ function register(req, res) {
 						const token = generateToken(user.id);
 						// I'd normally do a status(200) here, but ya can't send more than one response, and we need to affirm the user was created successfully
 						res.status(201).json({
-							message: `Affirmative, ${
-								user.username
-							}. I read you.`,
+							message: `Affirmative, ${user.username}. I read you.`,
 							token
 						});
 					})
@@ -58,10 +56,7 @@ function login(req, res) {
 	usersTable
 		.authUser(credentials.username)
 		.then((user) => {
-			if (
-				user &&
-				bcrypt.compareSync(credentials.password, user.password)
-			) {
+			if (user && bcrypt.compareSync(credentials.password, user.password)) {
 				const token = generateToken(user.id);
 				res.status(200).json({
 					message: `Affirmative, ${user.username}. I read you.`,
@@ -78,9 +73,7 @@ function login(req, res) {
 
 function getJokes(req, res) {
 	axios
-		.get(
-			'https://08ad1pao69.execute-api.us-east-1.amazonaws.com/dev/random_ten'
-		)
+		.get('https://08ad1pao69.execute-api.us-east-1.amazonaws.com/dev/random_ten')
 		.then((response) => {
 			res.status(200).json(response.data);
 		})
