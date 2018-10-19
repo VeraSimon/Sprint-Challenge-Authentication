@@ -14,8 +14,7 @@ function register(req, res) {
 	if (req.body.username && req.body.password) {
 		const newUser = {
 			username: req.body.username,
-			password: req.body.password,
-			department: req.body.department
+			password: req.body.password
 		};
 		const hash = bcrypt.hashSync(newUser.password, 13);
 		newUser.password = hash;
